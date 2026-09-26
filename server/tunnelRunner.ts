@@ -1,7 +1,7 @@
 import localtunnel from 'localtunnel';
 
 const PORT = 3001;
-const SUBDOMAIN = 'gas-rms-telemetry';
+const SUBDOMAIN = 'antigravity-ide';
 
 async function launchTunnel() {
   console.log(`[Tunnel Manager] Connecting tunnel to port ${PORT}...`);
