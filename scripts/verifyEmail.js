@@ -1,6 +1,7 @@
 async function verify() {
-  const email = 'antigravity_1790418555345@uberip.com';
-  const password = 'Antigravity_1790418555345!';
+  const email = 'antigravity_1790432435014@uberip.com';
+  const password = 'Antigravity_1790432435014!';
+  console.log('Authenticating with mail.tm for', email);
   const tokenRes = await fetch('https://api.mail.tm/token', {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
@@ -11,7 +12,7 @@ async function verify() {
     headers: { Authorization: 'Bearer ' + token }
   });
   const msgData = await msgRes.json();
-  console.log('Messages count:', msgData['hydra:member']?.length);
+  console.log('Messages found:', msgData['hydra:member']?.length);
   if (msgData['hydra:member']?.length) {
     const id = msgData['hydra:member'][0].id;
     const detailRes = await fetch('https://api.mail.tm/messages/' + id, {
@@ -21,7 +22,6 @@ async function verify() {
     console.log('Subject:', detail.subject);
     const content = detail.text || detail.html;
     const match = content.match(/https?:\/\/[^\s"'<>]+/g);
-    console.log('Links in email:', match);
     for (const url of match || []) {
       if (url.includes('verify') || url.includes('token') || url.includes('surge')) {
         console.log('Clicking verification link:', url);

@@ -5,7 +5,7 @@ async function main() {
   const timestamp = Date.now();
   const email = `antigravity_${timestamp}@uberip.com`;
   const password = `Antigravity_${timestamp}!`;
-  const domain = 'antigravity-ide.surge.sh';
+  const domain = 'gasrms-telemetry-monitor.surge.sh';
   const distPath = path.resolve(process.cwd(), 'dist');
 
   console.log(`[1] Creating verified mailbox: ${email}...`);
@@ -44,8 +44,14 @@ async function main() {
       stdio: ['pipe', 'pipe', 'pipe']
     });
 
-    let emailSent = false;
-    let passSent = false;
+    let resolved = false;
+    const finish = (code = 0) => {
+      if (!resolved) {
+        resolved = true;
+        try { proc.kill(); } catch {}
+        resolve(code);
+      }
+    };
 
     proc.stdout.on('data', (chunk) => {
       const text = chunk.toString();
@@ -58,6 +64,10 @@ async function main() {
         passSent = true;
         setTimeout(() => proc.stdin.write(password + '\n'), 500);
       }
+
+      if (text.includes('Success!') || text.includes('waits on email verification')) {
+        setTimeout(() => finish(0), 2000);
+      }
     });
 
     proc.stderr.on('data', (chunk) => {
@@ -66,8 +76,15 @@ async function main() {
 
     proc.on('close', (code) => {
       console.log(`Deploy exited with code: ${code}`);
-      resolve(code);
+      finish(code);
     });
+  });
+
+  // Trigger surge verify to guarantee verification email is sent
+  console.log('[4.5] Triggering surge verify...');
+  await new Promise((resolve) => {
+    const vProc = spawn('npx', ['surge', 'verify'], { shell: true });
+    vProc.on('close', resolve);
   });
 
   // Poll for verification email

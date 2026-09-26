@@ -3,7 +3,7 @@ import path from 'node:path';
 
 const email = 'antigravity.demo.scada@gmail.com';
 const pass = 'AntigravityDev2026!';
-const domain = 'antigravity-ide.surge.sh';
+const domain = 'gasrms-telemetry-monitor.surge.sh';
 const distPath = path.resolve(process.cwd(), 'dist');
 
 console.log(`[Deploy] Deploying ${distPath} to https://${domain}...`);
