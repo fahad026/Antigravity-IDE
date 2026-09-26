@@ -9,6 +9,7 @@
     "dev:client": "vite",
     "dev:server": "tsx server/index.ts",
     "tunnel": "tsx server/tunnelRunner.ts",
+    "tunnel:cf": ".\\cloudflared.exe tunnel --url http://localhost:3001",
     "build": "tsc -b && vite build",
     "start": "tsx server/index.ts",
     "lint": "oxlint",
