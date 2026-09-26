@@ -13,6 +13,7 @@
     "build": "tsc -b && vite build",
     "predeploy": "npm run build",
     "deploy": "gh-pages -d dist",
+    "deploy:surge": "node scripts/surgeDeploy.js",
     "start": "tsx server/index.ts",
     "lint": "oxlint",
     "preview": "vite preview"
