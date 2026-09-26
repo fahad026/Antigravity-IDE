@@ -5,8 +5,10 @@
   "type": "module",
   "scripts": {
     "dev": "concurrently -n \"BACKEND,FRONTEND\" -c \"cyan,magenta\" \"tsx server/index.ts\" \"vite\"",
+    "dev:all": "concurrently -n \"BACKEND,FRONTEND,TUNNEL\" -c \"cyan,magenta,yellow\" \"tsx server/index.ts\" \"vite\" \"tsx server/tunnelRunner.ts\"",
     "dev:client": "vite",
     "dev:server": "tsx server/index.ts",
+    "tunnel": "tsx server/tunnelRunner.ts",
     "build": "tsc -b && vite build",
     "start": "tsx server/index.ts",
     "lint": "oxlint",
@@ -31,6 +33,7 @@
     "@types/react-dom": "^19.2.7",
     "@vitejs/plugin-react": "^6.1.1",
     "concurrently": "^10.0.5",
+    "localtunnel": "^2.0.2",
     "oxlint": "^1.81.0",
     "tailwindcss": "^4.3.3",
     "tsx": "^4.23.15",
